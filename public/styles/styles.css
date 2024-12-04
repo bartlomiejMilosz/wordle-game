@@ -1,0 +1,9 @@
+body {
+  background-color: hsl(0, 0%, 20%);
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
