@@ -1,13 +1,16 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  css: {
-    modules: {
-      scopeBehaviour: 'local',
-    },
-  },
-  esbuild: {
-    jsxFactory: "h",
-    jsxFragment: "Fragment",
-  },
+	root: "./",
+	publicDir: "public",
+	css: {
+		modules: {
+			scopeBehaviour: "local",
+		},
+	},
+	esbuild: {
+		jsxFactory: "DOMcreateElement",
+		jsxFragment: "DOMcreateFragment",
+		jsxInject: `import { DOMcreateElement, DOMcreateFragment } from "../../utils/jsx-factory";`,
+	},
 });
