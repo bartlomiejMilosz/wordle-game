@@ -1,4 +1,3 @@
-import { h } from "../../utils/dom";
 import { Header } from "../Header/Header";
 import "./App.css";
 

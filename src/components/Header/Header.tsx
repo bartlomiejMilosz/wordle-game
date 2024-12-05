@@ -1,4 +1,3 @@
-import { h } from "../../utils/dom";
 import "./Header.css";
 
 export function Header() {

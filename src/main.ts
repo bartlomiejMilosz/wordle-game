@@ -1,13 +1,14 @@
 import { App } from "./components/App/App";
-import { appendCSSLinks, STYLES_PATHS } from "./utils/append-styles";
+import "./styles/reset.css";
+import "./styles/styles.css";
 
 (() => {
-	const appRoot: HTMLDivElement | null = document.querySelector("#app");
-	if (appRoot) {
-		appendCSSLinks(STYLES_PATHS);
-		appRoot.innerHTML = "";
-		appRoot.appendChild(App());
-	} else {
-		console.error("App root element not found");
-	}
+  const appRoot = document.querySelector("#app");
+  if (appRoot) {
+    appRoot.innerHTML = "";
+    const app = App();
+    appRoot.appendChild(app);
+  } else {
+    console.error("App root element not found");
+  }
 })();
