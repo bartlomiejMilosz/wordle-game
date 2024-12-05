@@ -6,4 +6,8 @@ export default defineConfig({
       scopeBehaviour: 'local',
     },
   },
+  esbuild: {
+    jsxFactory: "h",
+    jsxFragment: "Fragment",
+  },
 });
