@@ -1,5 +1,5 @@
-const API_URL: string = "https://words.dev-apis.com/validate-word";
-const WORD_TO_VALIDATE = "intent";
+// const API_URL: string = "https://words.dev-apis.com/validate-word";
+// const WORD_TO_VALIDATE = "intent";
 
 interface ValidateWordResponse {
 	valid: boolean;
