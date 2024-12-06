@@ -1,0 +1,14 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: var(--medium-space);
+  padding: var(--semi-medium-space);
+  align-items: center;
+}
+
+.grid-item {
+  border: 1px solid olive;
+  padding: var(--semi-medium-space);
+  text-align: center;
+}
