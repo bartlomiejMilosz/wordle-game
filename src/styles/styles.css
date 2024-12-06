@@ -1,42 +1,44 @@
 :root {
-  /* FONTS */
-  --font-size-base: 16px;
-  --font-size-heading: 32px;
-  --font-family-base: Helvetica, Arial, sans-serif;
-  --font-weight-regular: 400;
-  --font-weight-bold: 700;
+	/* FONTS */
+	--font-size-base: 16px;
+	--font-size-heading: 32px;
+	--font-family-base: Helvetica, Arial, sans-serif;
+	--font-weight-regular: 400;
+	--font-weight-bold: 700;
 
-  /* COLORS */
-  --color-body-bg: hsl(0, 0%, 20%);
-  --color-container-bg: hsl(0, 0%, 40%);
+	/* COLORS */
+	--color-body-bg: hsl(0, 0%, 20%);
+	--color-container-bg: hsl(0, 0%, 40%);
+  --color-grid-border: hsl(0, 0%, 40%);
 
-  /* CONTAINERS SIZE */
+	/* CONTAINERS SIZE */
 
-  /* GRID */
-  --grid-gap: 24px;
+	/* GRID */
+	--grid-gap: 24px;
 
-  /* RADIUS */
-  --xsmall-radius: 4px;
-  --small-radius: 8px;
-  --medium-radius: 16px;
-  --semi-medium-radius: 24px;
-  --large-radius: 32px;
-  --xlarge-radius: 48px;
+	/* RADIUS */
+	--xsmall-radius: 4px;
+	--small-radius: 8px;
+	--medium-radius: 16px;
+	--semi-medium-radius: 24px;
+	--large-radius: 32px;
+	--xlarge-radius: 48px;
 
-  /* SPACE */
-  --xsmall-space: 4px;
-  --small-space: 8px;
-  --medium-space: 16px;
-  --semi-medium-space: 24px;
-  --large-space: 32px;
-  --xlarge-space: 48px;
+	/* SPACE */
+	--xsmall-space: 4px;
+	--small-space: 8px;
+	--medium-space: 16px;
+	--semi-medium-space: 24px;
+	--large-space: 32px;
+	--xlarge-space: 48px;
 }
 
 body {
-  background-color: hsl(0, 0%, 20%);
-  font-family: var(--font-family-base);
+	font-family: var(--font-family-base);
 }
 
 #app {
-  /*  */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

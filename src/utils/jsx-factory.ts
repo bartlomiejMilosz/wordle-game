@@ -11,7 +11,7 @@ function escapeHtml(str: string): string {
 	return str.replace(/[&<>"'/\\]/g, (s) => `&${entityMap.get(s)};`);
 }
 
-function AttributeMapper(val: string) {
+function attributeMapper(val: string) {
 	return (
 		{
 			tabIndex: "tabindex",
@@ -37,7 +37,7 @@ export function DOMcreateElement(
 	const elm = document.createElement(tag);
 
 	for (let [name, val] of Object.entries(attrs)) {
-		name = escapeHtml(AttributeMapper(name));
+		name = escapeHtml(attributeMapper(name));
 		switch (true) {
 			case name.startsWith("on") && name.toLowerCase() in window:
 				elm.addEventListener(name.toLowerCase().substr(2), val);
@@ -80,16 +80,6 @@ export function DOMcreateElement(
 export function DOMcreateFragment(
 	_attrs?: { [key: string]: any },
 	...children: (HTMLElement | string)[]
-): DocumentFragment {
-	const fragment: DocumentFragment = document.createDocumentFragment();
-	children.forEach((child) => {
-		if (typeof child === "string") {
-			fragment.appendChild(document.createTextNode(child));
-		} else if (child instanceof Node) {
-			fragment.appendChild(child);
-		} else {
-			console.warn("Unsupported child type:", child);
-		}
-	});
-	return fragment;
+): (HTMLElement | string)[] {
+	return children;
 }
