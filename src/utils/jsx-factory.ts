@@ -1,26 +1,25 @@
-interface entityMapData {
-	[key: string]: string;
+const entityMap = new Map<string, string>([
+	["&", "amp"],
+	["<", "lt"],
+	[">", "gt"],
+	['"', "quot"],
+	["'", "#39"],
+	["/", "#x2F"],
+]);
+
+function escapeHtml(str: string): string {
+	return str.replace(/[&<>"'/\\]/g, (s) => `&${entityMap.get(s)};`);
 }
-export const entityMap: entityMapData = {
-	"&": "amp",
-	"<": "lt",
-	">": "gt",
-	'"': "quot",
-	"'": "#39",
-	"/": "#x2F",
-};
 
-export const escapeHtml = (str: object[] | string) =>
-	String(str).replace(/[&<>"'\/\\]/g, (s) => `&${entityMap[s]};`);
-
-// To keep some consistency with React DOM, lets use a mapper
-// https://reactjs.org/docs/dom-elements.html
-export const AttributeMapper = (val: string) =>
-	({
-		tabIndex: "tabindex",
-		className: "class",
-		readOnly: "readonly",
-	})[val] || val;
+function AttributeMapper(val: string) {
+	return (
+		{
+			tabIndex: "tabindex",
+			className: "class",
+			readOnly: "readonly",
+		}[val] || val
+	);
+}
 
 export function DOMcreateElement(
 	tag: Function | string,
@@ -30,7 +29,6 @@ export function DOMcreateElement(
 	attrs = attrs || {};
 	const stack: any[] = [...children];
 
-	// Support for components(ish)
 	if (typeof tag === "function") {
 		attrs.children = stack;
 		return tag(attrs);
@@ -38,25 +36,30 @@ export function DOMcreateElement(
 
 	const elm = document.createElement(tag);
 
-	// Add attributes
 	for (let [name, val] of Object.entries(attrs)) {
 		name = escapeHtml(AttributeMapper(name));
-		if (name.startsWith("on") && name.toLowerCase() in window) {
-			elm.addEventListener(name.toLowerCase().substr(2), val);
-		} else if (name === "ref") {
-			val(elm);
-		} else if (name === "style") {
-			Object.assign(elm.style, val);
-		} else if (val === true) {
-			elm.setAttribute(name, name);
-		} else if (val !== false && val != null) {
-			elm.setAttribute(name, escapeHtml(val));
-		} else if (val === false) {
-			elm.removeAttribute(name);
+		switch (true) {
+			case name.startsWith("on") && name.toLowerCase() in window:
+				elm.addEventListener(name.toLowerCase().substr(2), val);
+				break;
+			case name === "ref":
+				val(elm);
+				break;
+			case name === "style" && typeof val === "object":
+				Object.assign(elm.style, val);
+				break;
+			case val === true:
+				elm.setAttribute(name, name);
+				break;
+			case val !== false && val != null:
+				elm.setAttribute(name, escapeHtml(String(val)));
+				break;
+			case val === false:
+				elm.removeAttribute(name);
+				break;
 		}
 	}
 
-	// Append children
 	while (stack.length) {
 		const child = stack.shift();
 
@@ -74,9 +77,19 @@ export function DOMcreateElement(
 	return elm;
 }
 
-export const DOMcreateFragment = (
+export function DOMcreateFragment(
 	_attrs?: { [key: string]: any },
 	...children: (HTMLElement | string)[]
-): (HTMLElement | string)[] => {
-	return children;
-};
+): DocumentFragment {
+	const fragment: DocumentFragment = document.createDocumentFragment();
+	children.forEach((child) => {
+		if (typeof child === "string") {
+			fragment.appendChild(document.createTextNode(child));
+		} else if (child instanceof Node) {
+			fragment.appendChild(child);
+		} else {
+			console.warn("Unsupported child type:", child);
+		}
+	});
+	return fragment;
+}
