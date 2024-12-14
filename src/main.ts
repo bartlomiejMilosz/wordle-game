@@ -1,26 +1,20 @@
-import { App } from "./components/App/App";
-import "./styles/reset.css";
-import "./styles/styles.css";
+const appContainer: HTMLArticleElement | null = document.querySelector(".app-container");
+const gridContainer: HTMLSectionElement | null = document.querySelector(".grid-container");
 
 function initializeApp(): void {
-	const appRoot = document.querySelector("#app");
-	if (!appRoot) {
-		console.error(
-			"App root element not found. Ensure there is an element with id='app' in your index.html.",
-		);
-		return;
-	}
-
-	try {
-		appRoot.innerHTML = ""; // Clear any existing content
-		const app = App();
-		appRoot.appendChild(app);
-	} catch (error) {
-		console.error("Error initializing the app:", error);
-		appRoot.innerHTML = "<p>Something went wrong. Please try again later.</p>"; // Fallback UI
-	}
+  // Initialize application-related logic here
 }
 
+function initializeGridItems(gridCells: number): void {
+  Array.from({ length: gridCells }).forEach(() => {
+    const gridItem: HTMLDivElement = document.createElement("div");
+    gridItem.classList.add("grid-item");
+    gridItem.innerText = "";
+    gridContainer?.appendChild(gridItem);
+  });
+}
+ 
 document.addEventListener("DOMContentLoaded", () => {
-	initializeApp();
+  initializeGridItems(30); // Initialize grid with 30 cells
+  initializeApp();
 });

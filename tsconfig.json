@@ -5,9 +5,7 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-    "jsx": "preserve",
-    "jsxFactory": "DOMcreateElement",
-    "jsxFragmentFactory": "DOMcreateFragment",
+    "typeRoots": ["node_modules/@types", "src/types"],
 
     /* Bundler mode */
     "moduleResolution": "Bundler",
@@ -23,5 +21,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "src/css.d.ts", "src/jsx-factory.d.ts"]
+  "include": ["src"]
 }

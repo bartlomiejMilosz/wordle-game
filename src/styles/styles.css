@@ -38,12 +38,50 @@
 body {
   background-color: var(--color-bg-primary);
 	font-family: var(--font-family-base);
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-#app {
+.app-container {
+  display: inline-block;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: var(--medium-space);
+  align-items: center;
+  margin-top: var(--medium-space);
+}
+
+.grid-item {
+  background-color: var(--color-bg-grid-element);
+  padding: var(--large-space);
+  text-align: center;
+  border-radius: var(--xsmall-radius);
+  border-bottom: var(--xsmall-space) solid var(--color-grid-border);
+}
+
+.header {
+  width: -webkit-fill-available;
   display: flex;
   flex-direction: column;
   align-items: center;
-	justify-content: center;
-	height: 100vh;
+  justify-content: center;
+  padding-bottom: 0;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+}
+
+.header-title {
+  font-weight: var(--font-weight-bold);
+}
+
+.header-bar {
+  border-bottom: 1px solid var(--color-text-primary);
+  margin: var(--semi-medium-space) 0;
+  width: 100%;
 }

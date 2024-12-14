@@ -1,12 +1,12 @@
-// const API_URL: string = "https://words.dev-apis.com/validate-word";
-// const WORD_TO_VALIDATE = "intent";
+const API_URL: string = "https://words.dev-apis.com/validate-word";
+const WORD_TO_VALIDATE = "cigar";
 
 interface ValidateWordResponse {
-	valid: boolean;
-	message: string;
+	word: string;
+	validWord: boolean;
 }
 
-export default async function fetchWord(
+export async function fetchWord(
 	url: string,
 	word: string,
 ): Promise<ValidateWordResponse> {
@@ -21,7 +21,7 @@ export default async function fetchWord(
 			throw new Error(`Error: ${response.status} ${response.statusText}`);
 		}
 
-		const processedResponse = await response.json();
+		const processedResponse: ValidateWordResponse = await response.json();
 		return processedResponse;
 	} catch (error) {
 		console.error("An error occurred while fetching the word:", error);
