@@ -1,20 +1,23 @@
-const appContainer: HTMLArticleElement | null = document.querySelector(".app-container");
-const gridContainer: HTMLSectionElement | null = document.querySelector(".grid-container");
-
-function initializeApp(): void {
-  // Initialize application-related logic here
-}
+import { handlePressKey } from "./handlers/handle-press-key";
+import { gridContainer } from "./utils/dom-utils";
 
 function initializeGridItems(gridCells: number): void {
-  Array.from({ length: gridCells }).forEach(() => {
-    const gridItem: HTMLDivElement = document.createElement("div");
-    gridItem.classList.add("grid-item");
-    gridItem.innerText = "";
-    gridContainer?.appendChild(gridItem);
-  });
+	if (gridContainer) {
+		gridContainer.innerHTML = "";
+	}
+	Array.from({ length: gridCells }).forEach(() => {
+		const gridItem: HTMLDivElement = document.createElement("div");
+		gridItem.classList.add("grid-item");
+		gridItem.innerText = "";
+		gridContainer?.appendChild(gridItem);
+	});
 }
- 
+
+function initializeApp(): void {
+	handlePressKey();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  initializeGridItems(30); // Initialize grid with 30 cells
-  initializeApp();
+	initializeGridItems(30); // Initialize grid with 30 cells - game standard
+	initializeApp();
 });
