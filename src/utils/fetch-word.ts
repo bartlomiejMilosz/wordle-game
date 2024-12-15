@@ -6,7 +6,7 @@ interface ValidateWordResponse {
 	validWord: boolean;
 }
 
-export async function fetchWord(
+async function fetchWord(
 	url: string,
 	word: string,
 ): Promise<ValidateWordResponse> {
@@ -28,3 +28,5 @@ export async function fetchWord(
 		throw error;
 	}
 }
+
+export { fetchWord };

@@ -4,7 +4,7 @@ import { handleBackspace } from "./handle-backspace";
 import { handleCommit } from "./handle-commit";
 
 function handlePressKey() {
-	document.addEventListener("keydown", (event: KeyboardEvent) => {
+	document.addEventListener("keydown", async (event: KeyboardEvent) => {
 		const action: string = event.key;
 		const gridItems: NodeListOf<HTMLDivElement> = getGridItems();
 
@@ -15,7 +15,7 @@ function handlePressKey() {
 
 		switch (true) {
 			case action === "Enter":
-				handleCommit();
+				await handleCommit();
 				break;
 			case action === "Backspace":
 				handleBackspace(gridItems);
