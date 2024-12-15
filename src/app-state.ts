@@ -1,17 +1,15 @@
-interface GameState {
-  currentGuess: string;
+class GameState {
+  private _currentGuess: string = "";
+
+  get currentGuess(): string {
+    return this._currentGuess;
+  }
+
+  set currentGuess(newGuess: string) {
+    this._currentGuess = newGuess;
+  }
 }
 
-const gameState: GameState = {
-  currentGuess: "",
-};
+const gameState: GameState = new GameState();
 
-function getCurrentGuess(): string {
-  return gameState.currentGuess;
-}
-
-function updateCurrentGuess(newGuess: string): void {
-  gameState.currentGuess = newGuess;
-}
-
-export { gameState, getCurrentGuess, updateCurrentGuess };
+export { gameState };

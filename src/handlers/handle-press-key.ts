@@ -5,19 +5,24 @@ import { handleCommit } from "./handle-commit";
 
 function handlePressKey() {
 	document.addEventListener("keydown", (event: KeyboardEvent) => {
-		const action = event.key;
+		const action: string = event.key;
+		const gridItems: NodeListOf<HTMLDivElement> = getGridItems();
+
+		if (!gridItems || gridItems.length === 0) {
+			console.error("Grid items not initialized or empty.");
+			return;
+		}
+
 		switch (true) {
 			case action === "Enter":
 				handleCommit();
 				break;
 			case action === "Backspace":
-				handleBackspace();
+				handleBackspace(gridItems);
 				break;
-			case isLetter(action): {
-				const gridItems: NodeListOf<HTMLDivElement> = getGridItems();
+			case isLetter(action):
 				handleAddLetter(action.toUpperCase(), gridItems);
 				break;
-			}
 			default:
 				// Do nothing
 				break;
