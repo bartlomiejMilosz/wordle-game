@@ -1,16 +1,6 @@
+import { gameState } from "../app-state";
+
 const ANSWER_LENGTH: number = 5; // number depends on game logic
-
-interface GameState {
-	currentGuess: string;
-}
-
-const gameState: GameState = {
-	currentGuess: "",
-};
-
-function getCurrentGuess(): string {
-	return gameState.currentGuess;
-}
 
 function handleAddLetter(letter: string, gridItems: NodeListOf<HTMLDivElement>): void {
 	if (!gridItems || gridItems.length === 0) {
@@ -34,4 +24,4 @@ function handleAddLetter(letter: string, gridItems: NodeListOf<HTMLDivElement>):
   }
 }
 
-export { handleAddLetter, getCurrentGuess };
+export { handleAddLetter };
