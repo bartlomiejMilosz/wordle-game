@@ -5,7 +5,7 @@ async function handleCommit() {
 		// Do nothing
 		return;
 	}
-
+  
   gameState.stepToTheNextRow();
 }
 
