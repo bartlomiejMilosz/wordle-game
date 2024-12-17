@@ -1,6 +1,7 @@
+import { getWordOfTheDay } from "../api/fetch-word";
 import { validateWord } from "../api/validate-word";
 import { gameState } from "../app-state";
-import { getGridItems, loader } from "../utils/dom-utils";
+import { getGridItems } from "../utils/dom-utils";
 
 async function handleCommit() {
 	if (gameState.currentGuess.length !== gameState.ANSWER_LENGTH) {
@@ -10,8 +11,9 @@ async function handleCommit() {
 
 	setLoading(true);
 	try {
-		const isValid = await validateWord(gameState.currentGuess);
-		if (isValid) {
+		const isValid: boolean = await validateWord(gameState.currentGuess);
+    const wordOfTheDay: string = await getWordOfTheDay();
+		if (isValid && gameState.currentGuess === wordOfTheDay.toUpperCase()) {
 			const gridItems: HTMLDivElement[] = Array.from(getGridItems());
 			const startIndex: number = gameState.currentRow * 5;
 			const endIndex: number = startIndex + 5;
