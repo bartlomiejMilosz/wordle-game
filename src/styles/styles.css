@@ -104,11 +104,7 @@ body {
 }
 
 .hidden {
-  visibility: hidden; /* Hide content but keep space */
-}
-
-.hidden.no-space {
-  display: none; /* Remove element and space */
+  visibility: hidden;
 }
 
 @keyframes spin {
