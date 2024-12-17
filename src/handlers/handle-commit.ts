@@ -1,6 +1,6 @@
 import { validateWord } from "../api/validate-word";
 import { gameState } from "../app-state";
-import { getGridItems, spiral } from "../utils/dom-utils";
+import { getGridItems, loader } from "../utils/dom-utils";
 
 async function handleCommit() {
 	if (gameState.currentGuess.length !== gameState.ANSWER_LENGTH) {
@@ -8,7 +8,7 @@ async function handleCommit() {
 		return;
 	}
 
-	setLoading(false);
+	setLoading(true);
 	try {
 		const isValid = await validateWord(gameState.currentGuess);
 		if (isValid) {
@@ -16,8 +16,6 @@ async function handleCommit() {
 			const startIndex: number = gameState.currentRow * 5;
 			const endIndex: number = startIndex + 5;
 			const rowItems: HTMLDivElement[] = gridItems.slice(startIndex, endIndex);
-
-			// Change background color to green for valid row
 			rowItems.forEach((item) => {
 				item.style.backgroundColor = "green";
 			});
@@ -27,16 +25,27 @@ async function handleCommit() {
 	} catch (error) {
 		console.error("Error during fetch or validation:", error);
 	} finally {
-		// Hide the spinner after the fetch is complete or if an error occurs
-		setLoading(true);
+		setLoading(false); // Hide the loader and restore middle cell value after the fetch is complete or if an error occurs
 	}
-
 	gameState.stepToTheNextRow();
 }
 
 function setLoading(isLoading: boolean): void {
-	if (spiral) {
-		spiral.classList.toggle("hidden", isLoading);
+	const gridItems: HTMLDivElement[] = Array.from(getGridItems());
+	const startIndex: number = gameState.currentRow * 5;
+	const endIndex: number = startIndex + 5;
+	const rowItems: HTMLDivElement[] = gridItems.slice(startIndex, endIndex);
+	const middleIndex: number = 2;
+	const middleItem: HTMLDivElement = rowItems[middleIndex];
+	if (isLoading) {
+		if (!gameState.middleCellLetter) {
+			gameState.middleCellLetter = middleItem.innerText;
+		}
+		rowItems.forEach((item) => item.classList.add("gray-out"));
+		middleItem.innerHTML = `<span class="loader">🌀</span>`;
+	} else {
+		middleItem.innerText = gameState.middleCellLetter;
+		rowItems.forEach((item) => item.classList.remove("gray-out"));
 	}
 }
 

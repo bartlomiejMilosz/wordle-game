@@ -58,6 +58,7 @@ body {
 	grid-template-rows: repeat(6, 1fr);
 	gap: var(--medium-space);
 	align-items: center;
+	margin-top: var(--large-space);
 }
 
 .grid-item {
@@ -73,7 +74,7 @@ body {
 	justify-content: center;
 	color: var(--color-text-primary);
 	font-weight: var(--font-weight-bold);
-	font-size: var(--font-grid-item-size)
+	font-size: var(--font-grid-item-size);
 }
 
 .header {
@@ -98,20 +99,20 @@ body {
 	width: 100%;
 }
 
-.spiral {
-  font-size: var(--font-spiral-size);
-  animation: spin 2s linear infinite;
+.grid-item .loader {
+	animation: spin 1s linear infinite;
+	font-size: inherit;
 }
 
-.hidden {
-  visibility: hidden;
+.grid-item.gray-out {
+	background-color: gray;
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
