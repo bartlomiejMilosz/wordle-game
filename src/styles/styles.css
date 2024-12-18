@@ -105,7 +105,7 @@ body {
 }
 
 .grid-item.gray-out {
-	background-color: gray;
+	background-color: rgb(92, 92, 92);
 }
 
 .green {
@@ -120,25 +120,11 @@ body {
 	background-color: gray;
 }
 
-/* CSS for red border blink */
-@keyframes blink-red-border {
-  0% {
-    border-color: red;
-  }
-  50% {
-    border-color: transparent;
-  }
-  100% {
-    border-color: red;
-  }
-}
-
 .blink-red {
-  animation: blink-red-border 0.5s ease-in-out;
-  border: 2px solid red; /* Ensure there's a border to animate */
-  box-sizing: border-box; /* Make border visible without affecting layout */
+	animation: blink-red-border 0.5s ease-in-out;
+	border: 2px solid red;
+	box-sizing: border-box;
 }
-
 
 @keyframes spin {
 	0% {
@@ -146,5 +132,17 @@ body {
 	}
 	100% {
 		transform: rotate(360deg);
+	}
+}
+
+@keyframes blink-red-border {
+	0% {
+		border-color: red;
+	}
+	50% {
+		border-color: transparent;
+	}
+	100% {
+		border-color: red;
 	}
 }

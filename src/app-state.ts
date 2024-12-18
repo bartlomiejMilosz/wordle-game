@@ -3,6 +3,7 @@ class GameState {
   private _currentRow: number = 0;
   private _middleCellLetter: string = ""; // Stores the original letter of the middle cell
 	public readonly ANSWER_LENGTH: number = 5; // Immutable constant per instance - number depends on game logic
+  public readonly ROUNDS: number = 5; // Counting from 0 -> 6 attemps
 
 	get currentGuess(): string {
     return this._currentGuess;
