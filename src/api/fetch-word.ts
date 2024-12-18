@@ -37,7 +37,7 @@ async function fetchWordOfTheDayData(
 async function getWordOfTheDay(random: boolean = false): Promise<string> {
 	try {
 		const response: WordOfTheDayResponse = await fetchWordOfTheDayData(random);
-		return response.word;
+		return response.word.toUpperCase();
 	} catch (error) {
 		console.error(`Failed to get word of the day: ${error}`);
 		throw error;

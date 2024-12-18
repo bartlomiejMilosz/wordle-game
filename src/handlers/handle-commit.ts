@@ -1,54 +1,48 @@
 import { getWordOfTheDay } from "../api/fetch-word";
 import { validateWord } from "../api/validate-word";
 import { gameState } from "../app-state";
-import { getGridItems } from "../utils/dom-utils";
+import { getCurrentRowItems } from "../utils/dom-utils";
+import { setLoading } from "../utils/loader";
 
 async function handleCommit() {
-	if (gameState.currentGuess.length !== gameState.ANSWER_LENGTH) {
+	if (isCurrentGuessComplete()) {
 		// Do nothing
 		return;
 	}
 
+	// TODO mark word as "correct", "close", "wrong"
+	// TODO you win alert
+
 	setLoading(true);
 	try {
-		const isValid: boolean = await validateWord(gameState.currentGuess);
-    const wordOfTheDay: string = await getWordOfTheDay();
-		if (isValid && gameState.currentGuess === wordOfTheDay.toUpperCase()) {
-			const gridItems: HTMLDivElement[] = Array.from(getGridItems());
-			const startIndex: number = gameState.currentRow * 5;
-			const endIndex: number = startIndex + 5;
-			const rowItems: HTMLDivElement[] = gridItems.slice(startIndex, endIndex);
-			rowItems.forEach((item) => {
-				item.style.backgroundColor = "green";
-			});
+		const [isValid, wordOfTheDay]: [boolean, string] = await Promise.all([
+			validateWord(gameState.currentGuess),
+			getWordOfTheDay(),
+		]);
+		if (isValid) {
+			handleWordValidation(wordOfTheDay);
 		} else {
-			console.error("Invalid word");
+			console.error("Invalid word. Try again.");
 		}
 	} catch (error) {
 		console.error("Error during fetch or validation:", error);
 	} finally {
 		setLoading(false); // Hide the loader and restore middle cell value after the fetch is complete or if an error occurs
+		gameState.stepToTheNextRow();
 	}
-	gameState.stepToTheNextRow();
 }
 
-function setLoading(isLoading: boolean): void {
-	const gridItems: HTMLDivElement[] = Array.from(getGridItems());
-	const startIndex: number = gameState.currentRow * 5;
-	const endIndex: number = startIndex + 5;
-	const rowItems: HTMLDivElement[] = gridItems.slice(startIndex, endIndex);
-	const middleIndex: number = 2;
-	const middleItem: HTMLDivElement = rowItems[middleIndex];
-	if (isLoading) {
-		if (!gameState.middleCellLetter) {
-			gameState.middleCellLetter = middleItem.innerText;
-		}
-		rowItems.forEach((item) => item.classList.add("gray-out"));
-		middleItem.innerHTML = `<span class="loader">🌀</span>`;
+function handleWordValidation(wordOfTheDay: string): void {
+	const currentRowItems: HTMLDivElement[] = getCurrentRowItems();
+	if (gameState.currentGuess === wordOfTheDay) {
+		currentRowItems.forEach((item) => item.classList.add("green"));
 	} else {
-		middleItem.innerText = gameState.middleCellLetter;
-		rowItems.forEach((item) => item.classList.remove("gray-out"));
+		console.error("The guess does not match the word of the day.");
 	}
+}
+
+function isCurrentGuessComplete(): boolean {
+	return gameState.currentGuess.length !== gameState.ANSWER_LENGTH;
 }
 
 export { handleCommit };
