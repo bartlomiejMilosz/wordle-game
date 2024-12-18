@@ -7,37 +7,66 @@ import { setLoading } from "../utils/loader";
 async function handleCommit() {
 	if (isCurrentGuessComplete()) {
 		// Do nothing
-		return;
 	}
 
-	// TODO mark word as "correct", "close", "wrong"
-	// TODO you win alert
-
 	setLoading(true);
+
+	let isValid = false;
 	try {
-		const [isValid, wordOfTheDay]: [boolean, string] = await Promise.all([
-			validateWord(gameState.currentGuess),
-			getWordOfTheDay(),
-		]);
+		const [validationResult, wordOfTheDay]: [boolean, string] =
+			await Promise.all([
+				validateWord(gameState.currentGuess),
+				getWordOfTheDay(),
+			]);
+
+		isValid = validationResult;
 		if (isValid) {
-			handleWordValidation(wordOfTheDay);
+			handleValidatedWord(wordOfTheDay);
 		} else {
 			console.error("Invalid word. Try again.");
+			clearCurrentRow();
+	    gameState.currentGuess = "";
 		}
 	} catch (error) {
 		console.error("Error during fetch or validation:", error);
 	} finally {
-		setLoading(false); // Hide the loader and restore middle cell value after the fetch is complete or if an error occurs
-		gameState.stepToTheNextRow();
+		setLoading(false);
+		if (isValid) {
+			gameState.stepToTheNextRow(); // Move to the next row only if the word was valid
+		}
+		gameState.middleCellLetter = "";
 	}
 }
 
-function handleWordValidation(wordOfTheDay: string): void {
+function clearCurrentRow(): void {
 	const currentRowItems: HTMLDivElement[] = getCurrentRowItems();
-	if (gameState.currentGuess === wordOfTheDay) {
-		currentRowItems.forEach((item) => item.classList.add("green"));
-	} else {
-		console.error("The guess does not match the word of the day.");
+	currentRowItems.forEach((item) => {
+		item.classList.add("blink-red");
+	});
+
+	setTimeout(() => {
+		currentRowItems.forEach((item) => {
+			item.classList.remove("blink-red");
+			item.innerText = "";
+			item.classList.remove("green", "yellow", "gray");
+		});
+	}, 500);
+}
+
+function handleValidatedWord(wordOfTheDay: string): void {
+	const currentRowItems: HTMLDivElement[] = getCurrentRowItems();
+	for (let i = 0; i < gameState.currentGuess.length; i++) {
+		const guessedLetter = gameState.currentGuess[i];
+		const wordLetter = wordOfTheDay[i];
+		const gridItem = currentRowItems[i];
+
+		if (guessedLetter === wordLetter) {
+			gridItem.classList.add("green");
+		} else if (wordOfTheDay.includes(guessedLetter)) {
+			gridItem.classList.add("yellow");
+		} else {
+			gridItem.classList.add("gray");
+		}
 	}
 }
 

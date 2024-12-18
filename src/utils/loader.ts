@@ -30,7 +30,7 @@ function storeMiddleCellValue(cell: HTMLDivElement): void {
 	}
 }
 
-function restoreMiddleCellValue(cell: HTMLDivElement): void {
+export function restoreMiddleCellValue(cell: HTMLDivElement): void {
 	cell.innerText = gameState.middleCellLetter;
 }
 

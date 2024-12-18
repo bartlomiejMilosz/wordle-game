@@ -112,6 +112,34 @@ body {
 	background-color: green;
 }
 
+.yellow {
+	background-color: yellow;
+}
+
+.gray {
+	background-color: gray;
+}
+
+/* CSS for red border blink */
+@keyframes blink-red-border {
+  0% {
+    border-color: red;
+  }
+  50% {
+    border-color: transparent;
+  }
+  100% {
+    border-color: red;
+  }
+}
+
+.blink-red {
+  animation: blink-red-border 0.5s ease-in-out;
+  border: 2px solid red; /* Ensure there's a border to animate */
+  box-sizing: border-box; /* Make border visible without affecting layout */
+}
+
+
 @keyframes spin {
 	0% {
 		transform: rotate(0deg);
