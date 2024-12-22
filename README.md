@@ -6,10 +6,7 @@ This is a Wordle game clone built with TypeScript and Vite. The game allows user
 
 Here’s a quick demonstration of the project UI:
 
-<video controls>
-  <source src="_design/app_demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+![App ddemo](_design/app-demo.png)
 
 ## Table of Contents
 
@@ -17,7 +14,6 @@ Here’s a quick demonstration of the project UI:
 - [Usage](#usage)
 - [Features](#features)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
