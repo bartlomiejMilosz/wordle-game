@@ -10,11 +10,16 @@
 	--font-weight-bold: 700;
 
 	/* COLORS */
-	--color-bg-primary: hsl(226, 23%, 20%);
-	--color-bg-secondary: hsl(226, 19%, 40%);
-	--color-bg-grid-element: hsl(223, 15%, 27%);
-	--color-grid-border: hsl(223, 15%, 15%);
-	--color-text-primary: rgb(230, 220, 200);
+	--color-bg-primary: hsl(240, 100%, 98%);
+	--color-bg-secondary: hsl(220, 15%, 90%);
+	--color-bg-grid-element: hsl(210, 20%, 88%);
+	--color-grid-border: hsl(210, 10%, 75%);
+	--color-text-primary: hsl(220, 15%, 20%);
+	--color-grid-item-gray-out: hsl(0, 0%, 70%);
+	--color-guess-letter-correct: hsl(145, 63%, 42%);
+	--color-guess-letter-included: hsl(45, 100%, 50%);
+	--color-guess-letter-incorrect: hsl(0, 0%, 55%);
+	--color-wrong-alert: hsl(0, 78%, 62%);
 
 	/* CONTAINERS SIZE */
 	--grid-item-container-size: 75px;
@@ -67,7 +72,6 @@ body {
 	width: var(--grid-item-container-size);
 	text-align: center;
 	border-radius: var(--xsmall-radius);
-	border-bottom: var(--xsmall-space) solid var(--color-grid-border);
 	text-transform: uppercase;
 	display: flex;
 	align-items: center;
@@ -105,24 +109,24 @@ body {
 }
 
 .grid-item.gray-out {
-	background-color: rgb(92, 92, 92);
+	background-color: var(--color-grid-item-gray-out);
 }
 
-.green {
-	background-color: green;
+.guess-letter-green {
+	background-color: var(--color-guess-letter-correct);
 }
 
-.yellow {
-	background-color: yellow;
+.guess-letter-yellow {
+	background-color: var(--color-guess-letter-included);
 }
 
-.gray {
-	background-color: gray;
+.guess-letter-gray {
+	background-color: var(--color-guess-letter-incorrect);
 }
 
 .blink-red {
 	animation: blink-red-border 0.5s ease-in-out;
-	border: 2px solid red;
+	border: 2px solid var(--color-wrong-alert);
 	box-sizing: border-box;
 }
 
@@ -137,12 +141,12 @@ body {
 
 @keyframes blink-red-border {
 	0% {
-		border-color: red;
+		border-color: var(--color-wrong-alert);
 	}
 	50% {
 		border-color: transparent;
 	}
 	100% {
-		border-color: red;
+		border-color: var(--color-wrong-alert);
 	}
 }
