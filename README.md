@@ -1,6 +1,6 @@
 # Wordle Game
 
-This is a Wordle game clone built with TypeScript and Vite. The game allows users to guess a word within a limited number of attempts.
+This is a Wordle game clone developed with TypeScript and Vite, where players challenge themselves to guess a hidden word within a limited number of attempts. With intuitive gameplay and daily word updates, it offers a fun and engaging experience for all word enthusiasts.
 
 ## UI
 
@@ -57,9 +57,12 @@ npm run preview
 
 ## Features
 
+- Dynamic word of the day: The word to guess changes every day based on an API, ensuring a fresh challenge for users daily.
 - Guess the word within a limited number of attempts.
 - Visual feedback for correct, incorrect, and partially correct guesses.
-- Responsive design.
+- Loading indicator: A spinner is displayed while waiting for the word or other data, providing a smooth user experience.
+- Adaptive UI based on game progress: As players make progress in the game, the interface updates to reflect the state of the game, such as highlighting the guessed letters or showing the next row for input.
+- Accessibility features: Designed with accessibility in mind, including keyboard navigation.
 
 ## Project Structure
 
