@@ -2,13 +2,14 @@ import { gameState } from "../app-state";
 import { getCurrentRowItems } from "./dom-utils";
 
 function setLoading(isLoading: boolean): void {
-	const currentRowItems = getCurrentRowItems();
-	const middleItem = getMiddleCell(currentRowItems);
+	const currentRowItems: HTMLDivElement[] = getCurrentRowItems();
+	const middleItem: HTMLDivElement = getMiddleCell(currentRowItems);
+	const LOADER_ICON: string = "🌀";
 
 	if (isLoading) {
 		storeMiddleCellValue(middleItem);
 		styleRow(currentRowItems, "gray-out");
-		showSpinnerInCell(middleItem);
+		showSpinnerInCell(middleItem, LOADER_ICON);
 	} else {
 		restoreMiddleCellValue(middleItem);
 		resetRowStyles(currentRowItems, "gray-out");
@@ -38,8 +39,8 @@ function resetRowStyles(rowItems: HTMLDivElement[], styleClass: string): void {
 	rowItems.forEach((item) => item.classList.remove(styleClass));
 }
 
-function showSpinnerInCell(cell: HTMLDivElement): void {
-	cell.innerHTML = `<span class="loader">🌀</span>`;
+function showSpinnerInCell(cell: HTMLDivElement, loaderIcon: string): void {
+	cell.innerHTML = `<span class="loader">${loaderIcon}</span>`;
 }
 
 export { setLoading };

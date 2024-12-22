@@ -12,7 +12,7 @@ async function handleCommit() {
 
 	setLoading(true);
 
-	let isValid: boolean = false;
+	let isWordValid: boolean = false;
 	let isCorrectGuess: boolean = false;
 	let isGameEnd: boolean = false;
 	try {
@@ -22,9 +22,9 @@ async function handleCommit() {
 				getWordOfTheDay(),
 			]);
 
-		isValid = validationResult;
+		isWordValid = validationResult;
 
-		if (isValid) {
+		if (isWordValid) {
 			isCorrectGuess = handleValidatedWord(wordOfTheDay);
 			if (isCorrectGuess) {
 				alert("You win!");
@@ -44,7 +44,7 @@ async function handleCommit() {
 		setLoading(false);
 		if (isGameEnd) {
 			resetGame();
-		} else if (isValid && !isGameEnd) {
+		} else if (isWordValid && !isGameEnd) {
 			gameState.stepToTheNextRow();
 		}
 		gameState.middleCellLetter = "";
@@ -61,32 +61,35 @@ function clearCurrentRow(): void {
 		currentRowItems.forEach((item) => {
 			item.classList.remove("blink-red");
 			item.innerText = "";
-			item.classList.remove("green", "yellow", "gray");
+			item.classList.remove(
+				"guess-letter-green",
+				"guess-letter-yellow",
+				"guess-letter-gray",
+			);
 		});
 	}, 500);
 }
 
 function handleValidatedWord(wordOfTheDay: string): boolean {
 	const currentRowItems: HTMLDivElement[] = getCurrentRowItems();
-	let allRight = true;
+	let isAllLettersMatchCorrectAnswer = true;
 
 	for (let i = 0; i < gameState.currentGuess.length; i++) {
 		const guessedLetter = gameState.currentGuess[i];
 		const wordLetter = wordOfTheDay[i];
 		const gridItem = currentRowItems[i];
-
 		if (guessedLetter === wordLetter) {
-			gridItem.classList.add("green");
+			gridItem.classList.add("guess-letter-green");
 		} else if (wordOfTheDay.includes(guessedLetter)) {
-			gridItem.classList.add("yellow");
-			allRight = false;
+			gridItem.classList.add("guess-letter-yellow");
+			isAllLettersMatchCorrectAnswer = false;
 		} else {
-			gridItem.classList.add("gray");
-			allRight = false;
+			gridItem.classList.add("guess-letter-gray");
+			isAllLettersMatchCorrectAnswer = false;
 		}
 	}
 
-	return allRight;
+	return isAllLettersMatchCorrectAnswer;
 }
 
 function resetGame(): void {
@@ -97,7 +100,12 @@ function resetGame(): void {
 	const currentRowItems = getGridItems();
 	currentRowItems.forEach((item) => {
 		item.innerText = "";
-		item.classList.remove("green", "yellow", "gray", "blink-red");
+		item.classList.remove(
+			"guess-letter-green",
+			"guess-letter-yellow",
+			"guess-letter-gray",
+			"blink-red",
+		);
 	});
 }
 
